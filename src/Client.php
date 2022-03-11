@@ -7,8 +7,10 @@ use GuzzleHttp\Exception\RequestException;
 use RedzJovi\HotelbedsHotel\Enums\Environment;
 use RedzJovi\HotelbedsHotel\Exceptions\ClientException;
 use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
+use Redzjovi\HotelbedsHotel\Responses\Types\Boards\IndexResponse as TypesBoardsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Languages\IndexResponse as TypesLanguagesIndexResponse;
 
 class Client
@@ -56,6 +58,30 @@ class Client
             $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
 
             return new TypesAccommodationsIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
+    }
+
+    /**
+     * @param TypesBoardsIndexRequest $request
+     * @return TypesBoardsIndexResponse
+     * @throws ClientException
+     */
+    public function getBoards($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/types/boards',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new TypesBoardsIndexResponse($contents);
         } catch (RequestException $requestException) {
             throw $this->requestExceptionToClientException($requestException);
         }

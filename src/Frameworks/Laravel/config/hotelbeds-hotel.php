@@ -13,6 +13,8 @@ return [
     'table_names' => [
         'accommodation' => 'accommodation',
         'accommodations' => 'accommodations',
+        'board' => 'board',
+        'boards' => 'boards',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',
