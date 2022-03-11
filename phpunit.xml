@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./tests/autoload.php" colors="true" stopOnFailure="false" verbose="true">
+    <testsuites>
+        <testsuite name="Hotelbeds hotel">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
