@@ -6,7 +6,9 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use RedzJovi\HotelbedsHotel\Enums\Environment;
 use RedzJovi\HotelbedsHotel\Exceptions\ClientException;
+use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
+use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Languages\IndexResponse as TypesLanguagesIndexResponse;
 
 class Client
@@ -33,6 +35,30 @@ class Client
         $this->apiKey = $apiKey;
         $this->secret = $secret;
         $this->environment = $environment;
+    }
+
+    /**
+     * @param TypesAccommodationsIndexRequest $request
+     * @return TypesAccommodationsIndexResponse
+     * @throws ClientException
+     */
+    public function getAccommodations($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/types/accommodations',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new TypesAccommodationsIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
     }
 
     private function getEndpoint()

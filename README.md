@@ -16,6 +16,13 @@ You can publish `the migration` and the `config/hotelbeds-php.php` with:
 php artisan hotelbeds-hotel:install
 ```
 
+### How to test with PHPUnit
+
+```bash
+phpunit --filter /test_get_languages$/
+phpunit --group types
+```
+
 Add new connection database `hotelbeds-hotel` in `config/database.php`.
 
 ## API

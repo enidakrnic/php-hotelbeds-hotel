@@ -11,6 +11,8 @@ return [
     ],
     'secret' => env('HOTELBEDS_HOTEL_SECRET', 'SECRET'),
     'table_names' => [
+        'accommodation' => 'accommodation',
+        'accommodations' => 'accommodations',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',

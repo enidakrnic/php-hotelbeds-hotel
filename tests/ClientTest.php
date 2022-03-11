@@ -4,6 +4,7 @@ namespace RedzJovi\HotelbedsHotel\Tests;
 
 use PHPUnit\Framework\TestCase;
 use RedzJovi\HotelbedsHotel\Client;
+use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 
 class ExpediaRapidClientTest extends TestCase
@@ -15,6 +16,16 @@ class ExpediaRapidClientTest extends TestCase
             getenv('HOTELBEDS_HOTEL_SECRET'),
             getenv('HOTELBEDS_HOTEL_ENVIRONMENT')
         );
+    }
+
+    /**
+     * @group types
+     */
+    public function test_get_accommodations()
+    {
+        $response = $this->getClient()->getAccommodations(new TypesAccommodationsIndexRequest());
+
+        $this->assertNotEmpty($response);
     }
 
     /**
