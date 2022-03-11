@@ -15,6 +15,8 @@ return [
         'accommodations' => 'accommodations',
         'board' => 'board',
         'boards' => 'boards',
+        'category' => 'category',
+        'categories' => 'categories',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',
