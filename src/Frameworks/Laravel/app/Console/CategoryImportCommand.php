@@ -24,31 +24,45 @@ class CategoryImportCommand extends Command
         /** @var Array<string, Category> */
         $categories = [];
 
+        $request = new IndexRequest();
+        $request->from = 1;
+        $request->to = 1;
+        $response = $client->getCategories($request);
+        $responseTotal = $response->total;
+
         foreach (config('hotelbeds-hotel.language.codes') as $languageCode) {
+            $categories = [];
+
             $request = new IndexRequest();
             $request->language = $languageCode;
             $request->useSecondaryLanguage = true;
-            $response = $client->getCategories($request);
 
-            foreach ($response->categories as $category) {
-                /** @var Category */
-                $model = Category::query()->firstOrNew([
-                    'code' => $category->code,
-                ]);
-                $model->accommodation_type = $category->accommodationType;
-                $model->group = $category->group;
-                $model->simple_code = $category->simpleCode;
+            while (count($categories) < $responseTotal) {
+                $response = $client->getCategories($request);
 
-                if ($model->save()) {
-                    $categories[$model->code] = $model;
+                foreach ($response->categories as $category) {
+                    /** @var Category */
+                    $model = Category::query()->firstOrNew([
+                        'code' => $category->code
+                    ]);
+                    $model->accommodation_type = $category->accommodationType;
+                    $model->group = $category->group;
+                    $model->simple_code = $category->simpleCode;
+
+                    if ($model->save()) {
+                        $categories[$model->code] = $model;
+                    }
+
+                    if ($categoryDescription = $category->description) {
+                        $model->descriptions()->updateOrCreate(
+                            ['language_code' => $categoryDescription->languageCode],
+                            ['content' => $categoryDescription->content]
+                        );
+                    }
                 }
 
-                if ($categoryDescription = $category->description) {
-                    $model->descriptions()->updateOrCreate(
-                        ['language_code' => $categoryDescription->languageCode],
-                        ['content' => $categoryDescription->content]
-                    );
-                }
+                $request->from = $response->getNextFrom();
+                $request->to = $response->getNextTo();
             }
         }
 

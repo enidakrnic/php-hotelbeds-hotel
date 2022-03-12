@@ -47,4 +47,14 @@ class IndexResponse
         $this->to = intval($data['to']);
         $this->total = intval($data['total']);
     }
+
+    public function getNextFrom()
+    {
+        return $this->to + 1;
+    }
+
+    public function getNextTo()
+    {
+        return $this->to + 1 + ($this->to - $this->from);
+    }
 }

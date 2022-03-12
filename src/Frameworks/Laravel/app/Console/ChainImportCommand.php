@@ -25,6 +25,8 @@ class ChainImportCommand extends Command
         $chains = [];
 
         $request = new IndexRequest();
+        $request->from = 1;
+        $request->to = 1;
         $response = $client->getChains($request);
         $responseTotal = $response->total;
 

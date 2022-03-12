@@ -20,33 +20,47 @@ class LanguageImportCommand extends Command
 
         /** @var Client */
         $client = App::make(Client::class);
-        $request = new IndexRequest();
-        $request->useSecondaryLanguage = true;
 
         /** @var Array<string, Language> */
         $languages = [];
 
-        foreach (config('hotelbeds-hotel.language.codes') as $languageCodes) {
-            $request->language = $languageCodes;
-            $response = $client->getLanguages($request);
+        $request = new IndexRequest();
+        $request->from = 1;
+        $request->to = 1;
+        $response = $client->getLanguages($request);
+        $responseTotal = $response->total;
 
-            foreach ($response->languages as $language) {
-                /** @var Language */
-                $model = Language::query()->firstOrNew([
-                    'code' => $language->code,
-                ]);
-                $model->name = $language->name;
+        foreach (config('hotelbeds-hotel.language.codes') as $languageCode) {
+            $languages = [];
 
-                if ($model->save()) {
-                    $languages[$model->code] = $model;
+            $request = new IndexRequest();
+            $request->language = $languageCode;
+            $request->useSecondaryLanguage = true;
+
+            while (count($languages) < $responseTotal) {
+                $response = $client->getLanguages($request);
+
+                foreach ($response->languages as $language) {
+                    /** @var Language */
+                    $model = Language::query()->firstOrNew([
+                        'code' => $language->code
+                    ]);
+                    $model->name = $language->name;
+
+                    if ($model->save()) {
+                        $languages[$model->code] = $model;
+                    }
+
+                    if ($languageDescription = $language->description) {
+                        $model->descriptions()->updateOrCreate(
+                            ['language_code' => $languageDescription->languageCode],
+                            ['content' => $languageDescription->content]
+                        );
+                    }
                 }
 
-                if ($languageDescription = $language->description) {
-                    $model->descriptions()->updateOrCreate(
-                        ['language_code' => $languageDescription->languageCode],
-                        ['content' => $languageDescription->content]
-                    );
-                }
+                $request->from = $response->getNextFrom();
+                $request->to = $response->getNextTo();
             }
         }
 

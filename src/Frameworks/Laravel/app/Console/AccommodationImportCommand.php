@@ -20,32 +20,46 @@ class AccommodationImportCommand extends Command
 
         /** @var Client */
         $client = App::make(Client::class);
-        $request = new IndexRequest();
-        $request->useSecondaryLanguage = true;
 
         /** @var Array<string, Accommodation> */
         $accommodations = [];
 
+        $request = new IndexRequest();
+        $request->from = 1;
+        $request->to = 1;
+        $response = $client->getAccommodations($request);
+        $responseTotal = $response->total;
+
         foreach (config('hotelbeds-hotel.language.codes') as $languageCode) {
+            $accommodations = [];
+
+            $request = new IndexRequest();
             $request->language = $languageCode;
-            $response = $client->getAccommodations($request);
+            $request->useSecondaryLanguage = true;
 
-            foreach ($response->accommodations as $accommodation) {
-                /** @var Accommodation */
-                $model = Accommodation::query()->firstOrNew([
-                    'code' => $accommodation->code,
-                ]);
-                $model->type_description = $accommodation->typeDescription;
+            while (count($accommodations) < $responseTotal) {
+                $response = $client->getAccommodations($request);
 
-                if ($model->save()) {
-                    $accommodations[$model->code] = $model;
-                }
+                foreach ($response->accommodations as $accommodation) {
+                    /** @var Accommodation */
+                    $model = Accommodation::query()->firstOrNew([
+                        'code' => $accommodation->code
+                    ]);
+                    $model->type_description = $accommodation->typeDescription;
 
-                if ($accommodationTypeMultiDescription = $accommodation->typeMultiDescription) {
-                    $model->typeMultiDescriptions()->updateOrCreate(
-                        ['language_code' => $accommodationTypeMultiDescription->languageCode],
-                        ['content' => $accommodationTypeMultiDescription->content]
-                    );
+                    if ($model->save()) {
+                        $accommodations[$model->code] = $model;
+                    }
+
+                    if ($accommodationTypeMultiDescription = $accommodation->typeMultiDescription) {
+                        $model->typeMultiDescriptions()->updateOrCreate(
+                            ['language_code' => $accommodationTypeMultiDescription->languageCode],
+                            ['content' => $accommodationTypeMultiDescription->content]
+                        );
+                    }
+
+                    $request->from = $response->getNextFrom();
+                    $request->to = $response->getNextTo();
                 }
             }
         }
