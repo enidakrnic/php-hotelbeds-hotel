@@ -10,11 +10,13 @@ use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesA
 use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Categories\IndexRequest as TypesCategoriesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Chains\IndexRequest as TypesChainsIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\Classifications\IndexRequest as TypesClassificationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Boards\IndexResponse as TypesBoardsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Categories\IndexResponse as TypesCategoriesIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Chains\IndexResponse as TypesChainsIndexResponse;
+use Redzjovi\HotelbedsHotel\Responses\Types\Classifications\IndexResponse as TypesClassificationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Languages\IndexResponse as TypesLanguagesIndexResponse;
 
 class Client
@@ -134,6 +136,30 @@ class Client
             $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
 
             return new TypesChainsIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
+    }
+
+    /**
+     * @param TypesClassificationsIndexRequest $request
+     * @return TypesClassificationsIndexResponse
+     * @throws ClientException
+     */
+    public function getClassifications($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/types/classifications',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new TypesClassificationsIndexResponse($contents);
         } catch (RequestException $requestException) {
             throw $this->requestExceptionToClientException($requestException);
         }

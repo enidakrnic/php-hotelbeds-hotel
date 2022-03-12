@@ -19,6 +19,8 @@ return [
         'categories' => 'categories',
         'chain' => 'chain',
         'chains' => 'chains',
+        'classification' => 'classification',
+        'classifications' => 'classifications',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',
