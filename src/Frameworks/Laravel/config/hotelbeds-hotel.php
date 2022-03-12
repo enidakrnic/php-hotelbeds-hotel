@@ -17,6 +17,8 @@ return [
         'boards' => 'boards',
         'category' => 'category',
         'categories' => 'categories',
+        'chain' => 'chain',
+        'chains' => 'chains',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',

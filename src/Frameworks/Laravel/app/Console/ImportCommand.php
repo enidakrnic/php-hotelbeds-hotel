@@ -23,6 +23,8 @@ class ImportCommand extends Command
 
         Artisan::call('hotelbeds-hotel:category:import');
 
+        Artisan::call('hotelbeds-hotel:chain:import');
+
         $this->info('Imported hotelbeds hotel');
     }
 }

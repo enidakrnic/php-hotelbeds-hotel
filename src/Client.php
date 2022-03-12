@@ -9,10 +9,12 @@ use RedzJovi\HotelbedsHotel\Exceptions\ClientException;
 use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Categories\IndexRequest as TypesCategoriesIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\Chains\IndexRequest as TypesChainsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Boards\IndexResponse as TypesBoardsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Categories\IndexResponse as TypesCategoriesIndexResponse;
+use Redzjovi\HotelbedsHotel\Responses\Types\Chains\IndexResponse as TypesChainsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Languages\IndexResponse as TypesLanguagesIndexResponse;
 
 class Client
@@ -108,6 +110,30 @@ class Client
             $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
 
             return new TypesCategoriesIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
+    }
+
+    /**
+     * @param TypesChainsIndexRequest $request
+     * @return TypesChainsIndexResponse
+     * @throws ClientException
+     */
+    public function getChains($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/types/chains',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new TypesChainsIndexResponse($contents);
         } catch (RequestException $requestException) {
             throw $this->requestExceptionToClientException($requestException);
         }

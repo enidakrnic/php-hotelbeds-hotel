@@ -20,14 +20,14 @@ class CategoryImportCommand extends Command
 
         /** @var Client */
         $client = App::make(Client::class);
-        $request = new IndexRequest();
-        $request->useSecondaryLanguage = true;
 
         /** @var Array<string, Category> */
         $categories = [];
 
         foreach (config('hotelbeds-hotel.language.codes') as $languageCode) {
+            $request = new IndexRequest();
             $request->language = $languageCode;
+            $request->useSecondaryLanguage = true;
             $response = $client->getCategories($request);
 
             foreach ($response->categories as $category) {
