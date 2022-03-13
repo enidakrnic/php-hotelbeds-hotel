@@ -9,6 +9,7 @@ use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsInd
 use Redzjovi\HotelbedsHotel\Requests\Types\Categories\IndexRequest as TypesCategoriesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Chains\IndexRequest as TypesChainsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Classifications\IndexRequest as TypesClassificationsIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\Currencies\IndexRequest as TypesCurrenciesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 
 class ExpediaRapidClientTest extends TestCase
@@ -68,6 +69,16 @@ class ExpediaRapidClientTest extends TestCase
     public function test_get_classifications()
     {
         $response = $this->getClient()->getClassifications(new TypesClassificationsIndexRequest());
+
+        $this->assertNotEmpty($response);
+    }
+
+    /**
+     * @group types
+     */
+    public function test_get_currencies()
+    {
+        $response = $this->getClient()->getCurrencies(new TypesCurrenciesIndexRequest());
 
         $this->assertNotEmpty($response);
     }

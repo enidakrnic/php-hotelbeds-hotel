@@ -10,6 +10,7 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\BoardImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\CategoryImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ChainImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ClassificationImportCommand;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\CurrencyImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\LanguageImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\InstallCommand;
@@ -18,6 +19,7 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Board;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Category;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Chain;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Classification;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Currency;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Description;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Language;
 
@@ -35,6 +37,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
                 CategoryImportCommand::class,
                 ChainImportCommand::class,
                 ClassificationImportCommand::class,
+                CurrencyImportCommand::class,
                 InstallCommand::class,
                 ImportCommand::class,
                 LanguageImportCommand::class
@@ -74,6 +77,12 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
 
+            if (! class_exists('CreateHotelbedsHotelCurrencyTable')) {
+                $this->publishes([
+                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_currency_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_currency_table.php'),
+                ], 'migrations');
+            }
+
             if (! class_exists('CreateHotelbedsHotelDescriptionTable')) {
                 $this->publishes([
                   __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_description_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_description_table.php'),
@@ -109,6 +118,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
             config('hotelbeds-hotel.table_names.categories') => Category::class,
             config('hotelbeds-hotel.table_names.chains') => Chain::class,
             config('hotelbeds-hotel.table_names.classifications') => Classification::class,
+            config('hotelbeds-hotel.table_names.currencies') => Currency::class,
             config('hotelbeds-hotel.table_names.descriptions') => Description::class,
             config('hotelbeds-hotel.table_names.languages') => Language::class
         ]);

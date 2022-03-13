@@ -21,6 +21,8 @@ return [
         'chains' => 'chains',
         'classification' => 'classification',
         'classifications' => 'classifications',
+        'currency' => 'currency',
+        'currencies' => 'currencies',
         'description' => 'description',
         'descriptions' => 'descriptions',
         'language' => 'language',
