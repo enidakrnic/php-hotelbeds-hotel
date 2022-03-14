@@ -47,53 +47,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
                 __DIR__.'/../../config/hotelbeds-hotel.php' => config_path('hotelbeds-hotel.php'),
             ], 'config');
 
-            if (! class_exists('CreateHotelbedsHotelAccommodationTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_accommodation_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_accommodation_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelBoardTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_board_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_board_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelCategoryTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_category_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_category_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelChainTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_chain_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_chain_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelClassificationTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_classification_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_classification_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelCurrencyTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_currency_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_currency_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelDescriptionTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_description_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_description_table.php'),
-                ], 'migrations');
-            }
-
-            if (! class_exists('CreateHotelbedsHotelLanguageTable')) {
-                $this->publishes([
-                  __DIR__ . '/../../database/migrations/create_table_hotelbeds_hotel_language_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_hotelbeds_hotel_language_table.php'),
-                ], 'migrations');
-            }
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
     }
 

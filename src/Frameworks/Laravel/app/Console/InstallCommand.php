@@ -21,11 +21,6 @@ class InstallCommand extends Command
             '--tag' => "config"
         ]);
 
-        $this->call('vendor:publish', [
-            '--provider' => "Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Providers\HotelbedsHotelServiceProvider",
-            '--tag' => "migrations"
-        ]);
-
         $this->info('Installed hotelbeds hotel');
     }
 }
