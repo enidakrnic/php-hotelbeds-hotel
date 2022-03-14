@@ -11,6 +11,7 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\CategoryImportCommand
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ChainImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ClassificationImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\CurrencyImportCommand;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\FacilityImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\LanguageImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\InstallCommand;
@@ -21,6 +22,7 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Chain;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Classification;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Currency;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Description;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Facility;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Language;
 
 class HotelbedsHotelServiceProvider extends ServiceProvider
@@ -38,6 +40,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
                 ChainImportCommand::class,
                 ClassificationImportCommand::class,
                 CurrencyImportCommand::class,
+                FacilityImportCommand::class,
                 InstallCommand::class,
                 ImportCommand::class,
                 LanguageImportCommand::class
@@ -74,6 +77,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
             config('hotelbeds-hotel.table_names.classifications') => Classification::class,
             config('hotelbeds-hotel.table_names.currencies') => Currency::class,
             config('hotelbeds-hotel.table_names.descriptions') => Description::class,
+            config('hotelbeds-hotel.table_names.facilities') => Facility::class,
             config('hotelbeds-hotel.table_names.languages') => Language::class
         ]);
     }

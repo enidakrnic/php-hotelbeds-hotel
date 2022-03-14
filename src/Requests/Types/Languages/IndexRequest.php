@@ -24,7 +24,7 @@ class IndexRequest
         $fields = 'all',
         $language = '',
         $from = 1,
-        $to = 100,
+        $to = 1000,
         $useSecondaryLanguage = false,
         $lastUpdateTime = ''
     )

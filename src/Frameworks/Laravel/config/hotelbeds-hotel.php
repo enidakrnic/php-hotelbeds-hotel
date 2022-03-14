@@ -6,7 +6,7 @@ return [
     'language' => [
         'codes' => [
             'ENG',
-            'IND'
+            // 'IND',
         ]
     ],
     'secret' => env('HOTELBEDS_HOTEL_SECRET', 'SECRET'),
@@ -25,6 +25,8 @@ return [
         'currencies' => 'currencies',
         'description' => 'description',
         'descriptions' => 'descriptions',
+        'facility' => 'facility',
+        'facilities' => 'facilities',
         'language' => 'language',
         'languages' => 'languages'
     ]
