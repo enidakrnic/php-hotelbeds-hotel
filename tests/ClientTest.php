@@ -11,6 +11,7 @@ use Redzjovi\HotelbedsHotel\Requests\Types\Chains\IndexRequest as TypesChainsInd
 use Redzjovi\HotelbedsHotel\Requests\Types\Classifications\IndexRequest as TypesClassificationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Currencies\IndexRequest as TypesCurrenciesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Facilities\IndexRequest as TypesFacilitiesIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\FacilityGroups\IndexRequest as TypesFacilityGroupsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 
 class ExpediaRapidClientTest extends TestCase
@@ -90,6 +91,18 @@ class ExpediaRapidClientTest extends TestCase
     public function test_get_facilities()
     {
         $response = $this->getClient()->getFacilities(new TypesFacilitiesIndexRequest());
+
+        $this->assertNotEmpty($response);
+    }
+
+    /**
+     * @group types
+     */
+    public function test_get_facility_groups()
+    {
+        $response = $this->getClient()->getFacilityGroups(new TypesFacilityGroupsIndexRequest());
+
+        dump($response);
 
         $this->assertNotEmpty($response);
     }

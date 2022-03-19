@@ -26,6 +26,7 @@ return [
         'description' => 'description',
         'descriptions' => 'descriptions',
         'facility' => 'facility',
+        'facility_groups' => 'facility_groups',
         'facilities' => 'facilities',
         'language' => 'language',
         'languages' => 'languages'
