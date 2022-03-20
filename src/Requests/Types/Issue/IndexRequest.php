@@ -1,6 +1,6 @@
 <?php
 
-namespace Redzjovi\HotelbedsHotel\Requests\Types\Issues;
+namespace Redzjovi\HotelbedsHotel\Requests\Types\Boards;
 
 class IndexRequest
 {

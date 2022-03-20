@@ -16,6 +16,7 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\FacilityImportCommand
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\ImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\LanguageImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\InstallCommand;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Console\IssueImportCommand;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Accommodation;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Board;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Category;
@@ -25,7 +26,9 @@ use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Currency;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Description;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Facility;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\FacilityGroup;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Issue;
 use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Language;
+use Redzjovi\HotelbedsHotel\Frameworks\Laravel\App\Models\Name;
 
 class HotelbedsHotelServiceProvider extends ServiceProvider
 {
@@ -46,6 +49,7 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
                 FacilityGroupImportCommand::class,
                 InstallCommand::class,
                 ImportCommand::class,
+                IssueImportCommand::class,
                 LanguageImportCommand::class
             ]);
 
@@ -82,7 +86,9 @@ class HotelbedsHotelServiceProvider extends ServiceProvider
             config('hotelbeds-hotel.table_names.descriptions') => Description::class,
             config('hotelbeds-hotel.table_names.facilities') => Facility::class,
             config('hotelbeds-hotel.table_names.facility_groups') => FacilityGroup::class,
-            config('hotelbeds-hotel.table_names.languages') => Language::class
+            config('hotelbeds-hotel.table_names.issues') => Issue::class,
+            config('hotelbeds-hotel.table_names.languages') => Language::class,
+            config('hotelbeds-hotel.table_names.names') => Name::class
         ]);
     }
 }

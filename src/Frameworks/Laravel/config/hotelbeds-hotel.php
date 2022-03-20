@@ -28,7 +28,11 @@ return [
         'facility' => 'facility',
         'facility_groups' => 'facility_groups',
         'facilities' => 'facilities',
+        'issue' => 'issue',
+        'issues' => 'issues',
         'language' => 'language',
-        'languages' => 'languages'
+        'languages' => 'languages',
+        'name' => 'name',
+        'names' => 'names'
     ]
 ];

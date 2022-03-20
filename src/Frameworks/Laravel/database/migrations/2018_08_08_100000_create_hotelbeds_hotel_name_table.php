@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHotelbedsHotelDescriptionTable extends Migration
+class CreateHotelbedsHotelNameTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateHotelbedsHotelDescriptionTable extends Migration
      */
     public function up()
     {
-        $table = config('hotelbeds-hotel.table_names.descriptions');
+        $table = config('hotelbeds-hotel.table_names.names');
 
         Schema::connection('hotelbeds-hotel')->create($table, function (Blueprint $table) {
             $table->id();
             $table->string('language_code');
             $table->text('content');
-            $table->string('descriptionable_id');
-            $table->string('descriptionable_type');
+            $table->string('nameable_id');
+            $table->string('nameable_type');
             $table->timestamps();
 
             $table->index('language_code');
-            $table->index('descriptionable_id');
-            $table->index('descriptionable_type');
+            $table->index('nameable_id');
+            $table->index('nameable_type');
         });
     }
 
@@ -36,7 +36,7 @@ class CreateHotelbedsHotelDescriptionTable extends Migration
      */
     public function down()
     {
-        $table = config('hotelbeds-hotel.table_names.descriptions');
+        $table = config('hotelbeds-hotel.table_names.names');
 
         Schema::connection('hotelbeds-hotel')->dropIfExists($table);
     }

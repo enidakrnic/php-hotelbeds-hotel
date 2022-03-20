@@ -14,6 +14,7 @@ use Redzjovi\HotelbedsHotel\Requests\Types\Classifications\IndexRequest as Types
 use Redzjovi\HotelbedsHotel\Requests\Types\Currencies\IndexRequest as TypesCurrenciesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Facilities\IndexRequest as TypesFacilitiesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\FacilityGroups\IndexRequest as TypesFacilityGroupsIndexRequest;
+use Redzjovi\HotelbedsHotel\Requests\Types\Issues\IndexRequest as TypesIssuesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
 use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Boards\IndexResponse as TypesBoardsIndexResponse;
@@ -23,6 +24,7 @@ use Redzjovi\HotelbedsHotel\Responses\Types\Classifications\IndexResponse as Typ
 use Redzjovi\HotelbedsHotel\Responses\Types\Currencies\IndexResponse as TypesCurrenciesIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Facilities\IndexResponse as TypesFacilitiesIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\FacilityGroups\IndexResponse as TypesFacilityGroupsIndexResponse;
+use Redzjovi\HotelbedsHotel\Responses\Types\Issues\IndexResponse as TypesIssuesIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Languages\IndexResponse as TypesLanguagesIndexResponse;
 
 class Client
@@ -263,6 +265,30 @@ class Client
     private function getHttpClient()
     {
         return new GuzzleHttpClient();
+    }
+
+    /**
+     * @param TypesIssuesIndexRequest $request
+     * @return TypesIssuesIndexResponse
+     * @throws ClientException
+     */
+    public function getIssues($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/types/issues',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new TypesIssuesIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
     }
 
     /**
