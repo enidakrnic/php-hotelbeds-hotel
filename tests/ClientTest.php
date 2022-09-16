@@ -4,6 +4,7 @@ namespace RedzJovi\HotelbedsHotel\Tests;
 
 use PHPUnit\Framework\TestCase;
 use RedzJovi\HotelbedsHotel\Client;
+use Redzjovi\HotelbedsHotel\Requests\Hotels\Hotels\IndexRequest as HotelsHotelsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Categories\IndexRequest as TypesCategoriesIndexRequest;
@@ -103,7 +104,15 @@ class ExpediaRapidClientTest extends TestCase
     {
         $response = $this->getClient()->getFacilityGroups(new TypesFacilityGroupsIndexRequest());
 
-        dump($response);
+        $this->assertNotEmpty($response);
+    }
+
+    /**
+     * @group types
+     */
+    public function test_get_hotels()
+    {
+        $response = $this->getClient()->getHotels(new HotelsHotelsIndexRequest());
 
         $this->assertNotEmpty($response);
     }

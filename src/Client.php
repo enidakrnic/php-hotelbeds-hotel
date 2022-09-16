@@ -6,6 +6,7 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\RequestException;
 use RedzJovi\HotelbedsHotel\Enums\Environment;
 use RedzJovi\HotelbedsHotel\Exceptions\ClientException;
+use Redzjovi\HotelbedsHotel\Requests\Hotels\Hotels\IndexRequest as HotelsHotelsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Accommodations\IndexRequest as TypesAccommodationsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Boards\IndexRequest as TypesBoardsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Categories\IndexRequest as TypesCategoriesIndexRequest;
@@ -16,6 +17,7 @@ use Redzjovi\HotelbedsHotel\Requests\Types\Facilities\IndexRequest as TypesFacil
 use Redzjovi\HotelbedsHotel\Requests\Types\FacilityGroups\IndexRequest as TypesFacilityGroupsIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Issues\IndexRequest as TypesIssuesIndexRequest;
 use Redzjovi\HotelbedsHotel\Requests\Types\Languages\IndexRequest as TypesLanguagesIndexRequest;
+use Redzjovi\HotelbedsHotel\Responses\Hotels\Hotels\IndexResponse as HotelsHotelsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Accommodations\IndexResponse as TypesAccommodationsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Boards\IndexResponse as TypesBoardsIndexResponse;
 use Redzjovi\HotelbedsHotel\Responses\Types\Categories\IndexResponse as TypesCategoriesIndexResponse;
@@ -265,6 +267,30 @@ class Client
     private function getHttpClient()
     {
         return new GuzzleHttpClient();
+    }
+
+    /**
+     * @param HotelsHotelsIndexRequest $request
+     * @return TypesFacilityGroupsIndexResponse
+     * @throws ClientException
+     */
+    public function getHotels($request)
+    {
+        try {
+            $httpClientResponse = $this->getHttpClient()->get(
+                $this->getEndpoint().'/hotel-content-api/'.$this->version.'/hotels',
+                [
+                    'headers' => $request->toHeaders($this->getHeaders()),
+                    'query' => $request->toQueries()
+                ]
+            );
+
+            $contents = json_decode($httpClientResponse->getBody()->getContents(), true);
+
+            return new HotelsHotelsIndexResponse($contents);
+        } catch (RequestException $requestException) {
+            throw $this->requestExceptionToClientException($requestException);
+        }
     }
 
     /**
