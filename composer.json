@@ -2,7 +2,7 @@
     "name": "redzjovi/php-hotelbeds-hotel",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "6.*.*"
+        "guzzlehttp/guzzle": "^7.9"
     },
     "require-dev": {
         "phpunit/phpunit": "5.*.*",
